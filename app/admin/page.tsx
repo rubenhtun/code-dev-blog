@@ -31,7 +31,7 @@ const AdminPanel = () => {
         const fetchedBlogs = await getBlogs();
         setBlogs(fetchedBlogs);
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Failed to load blogs");
         setLoading(false);
       }
@@ -45,7 +45,7 @@ const AdminPanel = () => {
       try {
         await deleteBlog(blogId);
         setBlogs(blogs.filter((blog) => blog.id !== blogId));
-      } catch (err) {
+      } catch {
         alert("Failed to delete blog");
       }
     }
@@ -213,7 +213,7 @@ const AdminPanel = () => {
                             </td>
                             <td className="py-4 px-4 flex space-x-2">
                               <a
-                                href={`/edit-blog/${blog.id}`}
+                                href={`admin/edit-blog/${blog.id}`}
                                 className="text-teal-600 hover:text-teal-500 font-medium"
                               >
                                 Edit
