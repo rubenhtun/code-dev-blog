@@ -142,7 +142,7 @@ const AdminPanel = () => {
             </h2>
             <div className="flex items-center">
               <a
-                href="/add-blog"
+                href="admin/add-blog"
                 className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-all duration-300"
               >
                 Add New Blog

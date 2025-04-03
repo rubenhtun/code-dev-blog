@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import HeroBanner from "@/components/HeroBanner";
 import FeaturedPosts from "@/components/FeaturedPosts";
 import EmailSubscription from "@/components/EmailSubscription";
-import LatestPosts from "@/components/OurBlogs";
+import OurBlogs from "@/components/OurBlogs";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
       <HeroBanner />
       <FeaturedPosts />
       <EmailSubscription />
-      <LatestPosts />
+      <OurBlogs />
       <Footer />
     </>
   );
