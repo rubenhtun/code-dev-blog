@@ -1,13 +1,17 @@
-import React from "react";
+import Layout from "@/components/layout/Layout";
 import { getBlogs } from "@/lib/actions";
 import Image from "next/image";
 import Link from "next/link";
 
-const OurBlogs = async () => {
+const Blogs = async () => {
+  // Fetching all the blogs from the database
   const blogs = await getBlogs();
 
+  // Get unique blog categories
+  const categories = ["All", ...new Set(blogs.map((blog) => blog.category))];
+
   return (
-    <>
+    <Layout>
       <style>
         {`
           .dotted-bg {
@@ -18,9 +22,17 @@ const OurBlogs = async () => {
       </style>
       <section className="bg-orange-50 py-12 dotted-bg">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-800 text-center mb-8">
-            Our <span className="text-teal-600">Blogs</span>
-          </h2>
+          {/* Blog Categories */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className="px-4 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full hover:bg-teal-50 hover:text-teal-600 transition-all duration-300 focus:bg-teal-600 focus:text-white focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+              >
+                {category}
+              </button>
+            ))}
+          </div>
 
           {/* Grid Layout for Blogs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -70,7 +82,7 @@ const OurBlogs = async () => {
           {/* More Blogs Button */}
           <div className="text-center mt-8">
             <a
-              href="/blogs"
+              href="#"
               className="inline-block px-6 py-2 bg-teal-600 text-white font-semibold rounded-full shadow-md hover:bg-teal-500 transition-all duration-300"
             >
               More Blogs
@@ -78,8 +90,8 @@ const OurBlogs = async () => {
           </div>
         </div>
       </section>
-    </>
+    </Layout>
   );
 };
 
-export default OurBlogs;
+export default Blogs;

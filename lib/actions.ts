@@ -39,7 +39,7 @@ export async function getBlogs() {
     const blogs = await prisma.blog.findMany();
     return blogs;
   } catch (error) {
-    console.error("Error fetching blog:", error);
+    console.error("Error fetching blogs:", error);
     throw new Error("Unable to fetch blogs");
   }
 }
