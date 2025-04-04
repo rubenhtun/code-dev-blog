@@ -1,7 +1,7 @@
-"use client"; // This needs to be a client component for interactivity
+"use client";
 
 import React, { useState, useEffect } from "react";
-import { getBlogs } from "@/lib/actions";
+import { getBlogs, deleteBlog } from "@/lib/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -31,13 +31,25 @@ const AdminPanel = () => {
         const fetchedBlogs = await getBlogs();
         setBlogs(fetchedBlogs);
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Failed to load blogs");
         setLoading(false);
       }
     };
     fetchBlogs();
   }, []);
+
+  // Handle Blog Deletion
+  const handleDelete = async (blogId: string) => {
+    if (confirm("Are you sure you want to delete this blog?")) {
+      try {
+        await deleteBlog(blogId);
+        setBlogs(blogs.filter((blog) => blog.id !== blogId));
+      } catch {
+        alert("Failed to delete blog");
+      }
+    }
+  };
 
   return (
     <div className="flex h-screen bg-orange-50">
@@ -130,7 +142,7 @@ const AdminPanel = () => {
             </h2>
             <div className="flex items-center">
               <a
-                href="/add-blog"
+                href="admin/add-blog"
                 className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-all duration-300"
               >
                 Add New Blog
@@ -199,11 +211,17 @@ const AdminPanel = () => {
                                 }
                               )}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <button className="text-teal-600 hover:text-teal-500 mr-3">
+                            <td className="py-4 px-4 flex space-x-2">
+                              <a
+                                href={`admin/edit-blog/${blog.id}`}
+                                className="text-teal-600 hover:text-teal-500 font-medium"
+                              >
                                 Edit
-                              </button>
-                              <button className="text-red-600 hover:text-red-500">
+                              </a>
+                              <button
+                                onClick={() => handleDelete(blog.id)}
+                                className="text-red-600 hover:text-red-500 font-medium cursor-pointer"
+                              >
                                 Delete
                               </button>
                             </td>
