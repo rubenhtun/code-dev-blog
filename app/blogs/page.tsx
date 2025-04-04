@@ -1,12 +1,9 @@
 import Layout from "@/components/layout/Layout";
 import { getBlogs } from "@/lib/actions";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 
 const Blogs = async () => {
-  const session = await getServerSession();
-  console.log("Session:", session);
   // Fetching all the blogs from the database
   const blogs = await getBlogs();
 
