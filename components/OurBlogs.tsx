@@ -38,7 +38,7 @@ const OurBlogs = async () => {
                   className="w-full h-40 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-2">
                     {blog.title}
                   </h3>
                   <span className="text-teal-600 text-sm font-medium mb-2 block">
@@ -55,12 +55,9 @@ const OurBlogs = async () => {
                         year: "numeric",
                       })}
                     </span>
-                    <a
-                      href="#"
-                      className="text-teal-600 hover:text-teal-500 font-medium transition-colors duration-200"
-                    >
+                    <span className="text-teal-600 hover:text-teal-500 font-medium transition-colors duration-200">
                       Read More
-                    </a>
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -69,12 +66,12 @@ const OurBlogs = async () => {
 
           {/* More Blogs Button */}
           <div className="text-center mt-8">
-            <a
+            <Link
               href="/blogs"
               className="inline-block px-6 py-2 bg-teal-600 text-white font-semibold rounded-full shadow-md hover:bg-teal-500 transition-all duration-300"
             >
               More Blogs
-            </a>
+            </Link>
           </div>
         </div>
       </section>

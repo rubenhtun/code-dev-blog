@@ -1,15 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { getBlog } from "./action";
 
-interface Blog {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  imageUrl: string | null;
-}
-
-// Define props for the Server Component
 interface RelatedBlogProps {
   params: { id: string };
 }
@@ -33,21 +24,24 @@ const RelatedBlog = async ({ params }: RelatedBlogProps) => {
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto py-10 px-4">
-        <div className="group bg-gradient-to-br from-white to-gray-50">
+      <style>
+        {`
+          .dotted-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='5' cy='5' r='1' fill='%23f3a183'/%3E%3C/svg%3E");
+            background-size: 10px 10px;
+          }
+        `}
+      </style>
+      <div className="dotted-bg bg-orange-50">
+        <div className="group max-w-5xl mx-auto py-4 px-4">
           <div className="text-center p-6 space-y-3">
-            {/* Title */}
             <h3 className="text-2xl font-bold text-gray-900 leading-tight group-hover:text-teal-600 transition-colors duration-200">
               {blog.title}
             </h3>
-
-            {/* Category Tag */}
             <span className="inline-block px-3 py-1 bg-teal-100 text-teal-700 text-xs font-semibold rounded-full uppercase tracking-wide">
               {blog.category}
             </span>
           </div>
-
-          {/* Image Section */}
           <div className="relative">
             <img
               src={blog.imageUrl || ""}
@@ -56,9 +50,7 @@ const RelatedBlog = async ({ params }: RelatedBlogProps) => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
           </div>
-
-          {/* Description */}
-          <p className="text-gray-700 text-base leading-relaxed line-clamp-3">
+          <p className="text-gray-700 text-base leading-relaxed p-6">
             {blog.description}
           </p>
         </div>

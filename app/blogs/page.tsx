@@ -50,7 +50,7 @@ const Blogs = async () => {
                   className="w-full h-40 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-2">
                     {blog.title}
                   </h3>
                   <span className="text-teal-600 text-sm font-medium mb-2 block">
