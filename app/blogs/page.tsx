@@ -1,9 +1,12 @@
 import Layout from "@/components/layout/Layout";
 import { getBlogs } from "@/lib/actions";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 
 const Blogs = async () => {
+  const session = await getServerSession();
+  console.log("Session:", session);
   // Fetching all the blogs from the database
   const blogs = await getBlogs();
 
@@ -67,12 +70,9 @@ const Blogs = async () => {
                         year: "numeric",
                       })}
                     </span>
-                    <a
-                      href="#"
-                      className="text-teal-600 hover:text-teal-500 font-medium transition-colors duration-200"
-                    >
+                    <span className="text-teal-600 hover:text-teal-500 font-medium transition-colors duration-200">
                       Read More
-                    </a>
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -81,12 +81,12 @@ const Blogs = async () => {
 
           {/* More Blogs Button */}
           <div className="text-center mt-8">
-            <a
-              href="#"
+            <Link
+              href="/blogs"
               className="inline-block px-6 py-2 bg-teal-600 text-white font-semibold rounded-full shadow-md hover:bg-teal-500 transition-all duration-300"
             >
               More Blogs
-            </a>
+            </Link>
           </div>
         </div>
       </section>

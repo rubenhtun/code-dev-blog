@@ -5,14 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { upload } from "@vercel/blob/client";
 import { handleUpdateBlog } from "@/lib/actions";
-
-interface Blog {
-  id: string;
-  imageUrl: string;
-  title: string;
-  description: string;
-  category: string;
-}
+import { Blog } from "@prisma/client";
 
 interface UpdateBlogFormProps {
   blog: Blog | null;
