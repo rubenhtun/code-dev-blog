@@ -16,3 +16,9 @@ model Blog {
   category    String
   createdAt   DateTime @default(now())
 }
+
+model NewsLetter {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  createdAt   DateTime @default(now())
+}

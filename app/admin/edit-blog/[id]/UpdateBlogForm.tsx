@@ -153,11 +153,18 @@ const UpdateBlogForm = ({ blog }: UpdateBlogFormProps) => {
           </select>
         </div>
 
-        {/* Submit Button */}
-        <div className="flex justify-end">
+        {/* Cancel and Submit Button */}
+        <div className="flex justify-end gap-4">
+          <button
+            onClick={() => router.push("/admin")}
+            type="button"
+            className="px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-full cursor-pointer hover:bg-gray-300 transition duration-200"
+          >
+            Cancel
+          </button>
           <button
             type="submit"
-            className="px-6 py-2 bg-teal-600 text-white font-semibold rounded-full"
+            className="px-6 py-2 bg-teal-600 text-white font-semibold rounded-full cursor-pointer hover:bg-teal-700 transition duration-200"
             disabled={loading}
           >
             {loading ? "Updating..." : "Update Blog"}
