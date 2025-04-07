@@ -30,7 +30,7 @@ const OurBlogs = async () => {
                 className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform hover:translate-x-1 hover:-translate-y-1 hover:shadow-[-7px_7px_0px_#4b5563] cursor-pointer"
               >
                 <img
-                  src={blog.imageUrl || ""}
+                  src={blog.imageUrl || "blog-image.jpg"}
                   alt={blog.title}
                   className="w-full h-40 object-cover"
                 />

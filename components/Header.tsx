@@ -49,7 +49,7 @@ const Header = () => {
                 />
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="px-4 py-1 text-sm sm:text-base text-teal-600 hover:text-white bg-transparent hover:bg-teal-600 border-2 border-teal-600 font-semibold rounded-full transition-all duration-300"
+                  className="h-9 px-4 py-1 text-sm sm:text-base text-teal-600 hover:text-white bg-transparent hover:bg-teal-600 border-2 border-teal-600 font-semibold rounded-full transition-all duration-300 cursor-pointer"
                 >
                   Log Out
                 </button>
