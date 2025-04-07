@@ -1,7 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { getBlog } from "./action";
 import { Metadata } from "next";
-import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -86,16 +85,10 @@ const RelatedBlog = async ({ params }: RelatedBlogProps) => {
             </span>
           </div>
           <div className="relative">
-            <Image
-              src={blog.imageUrl || "/placeholder-image.jpg"}
+            <img
+              src={blog.imageUrl || ""}
               alt={blog.title || "Blog Image"}
-              width={1200}
-              height={630}
               className="w-full h-auto object-cover rounded-lg"
-              priority
-              onError={(e) => {
-                e.currentTarget.src = "/placeholder-image.jpg";
-              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent rounded-lg"></div>
           </div>
@@ -104,7 +97,7 @@ const RelatedBlog = async ({ params }: RelatedBlogProps) => {
           </p>
 
           {/* Share Section */}
-          <div className="share-section p-2 sm:p-4 border-t border-gray-200">
+          <div className="share-section p-2 sm:p-4">
             <h4 className="text-sm font-semibold text-gray-600 mb-3">
               Share this article:
             </h4>

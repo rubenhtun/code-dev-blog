@@ -1,6 +1,5 @@
 import React from "react";
 import { getBlogs } from "@/lib/actions";
-import Image from "next/image";
 import Link from "next/link";
 
 const OurBlogs = async () => {
@@ -30,11 +29,9 @@ const OurBlogs = async () => {
                 key={blog.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform hover:translate-x-1 hover:-translate-y-1 hover:shadow-[-7px_7px_0px_#4b5563] cursor-pointer"
               >
-                <Image
+                <img
                   src={blog.imageUrl || ""}
                   alt={blog.title}
-                  width={600}
-                  height={160}
                   className="w-full h-40 object-cover"
                 />
                 <div className="p-6">
