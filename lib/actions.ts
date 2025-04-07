@@ -87,3 +87,53 @@ export async function deleteBlog(blogId: string) {
     throw new Error("Unable to delete blog");
   }
 }
+
+// *******************************************
+// Email Subscription
+// *******************************************//
+export async function subscribeToNewsletter(email: string) {
+  try {
+    if (!email) {
+      return { success: false, message: "Email is required" };
+    }
+
+    await prisma.newsLetter.create({ data: { email } });
+
+    return { success: true, message: "Subscribed successfully" };
+  } catch (error) {
+    console.error("Error subscribing to newsletter:", error);
+    return {
+      success: false,
+      message: "Failed to subscribe",
+      error: "Unknown Server Error",
+    };
+  }
+}
+
+// *******************************************
+// Fetching Blogs from the Database with Prisma
+// *******************************************//
+export async function getSubscriptions() {
+  try {
+    const subscriptions = await prisma.newsLetter.findMany();
+    return subscriptions;
+  } catch (error) {
+    console.error("Error fetching subscriptions:", error);
+    throw new Error("Unable to fetch subscriptions");
+  }
+}
+
+// *******************************************
+// Deleting a Blog from the Database with Prisma
+// *******************************************//
+export async function deleteSubscription(emailId: string) {
+  try {
+    const deletedEmail = await prisma.newsLetter.delete({
+      where: { id: emailId },
+    });
+    return deletedEmail;
+  } catch (error) {
+    console.error("Error deleting email:", error);
+    throw new Error("Unable to delete email");
+  }
+}

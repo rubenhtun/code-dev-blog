@@ -9,6 +9,9 @@ export const authOptions = {
       clientSecret: config.googleClientSecret,
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
 };
 
 const handler = NextAuth(authOptions);

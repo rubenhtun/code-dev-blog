@@ -1,14 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -24,7 +20,10 @@ const Login = () => {
 
         {/* Google Sign In */}
         <div className="mt-6">
-          <button className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200 cursor-pointer">
+          <button
+            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-200 cursor-pointer"
+            onClick={() => signIn("google", { callbackUrl: "/blogs" })}
+          >
             <FontAwesomeIcon
               icon={faGoogle}
               className="w-5 h-5 mr-2 text-red-500"
@@ -63,7 +62,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Password Input*/}
+          {/* Password Input */}
           <div>
             <label
               htmlFor="password"
@@ -82,9 +81,9 @@ const Login = () => {
           </div>
 
           {/* Error Message */}
-          {error && (
+          {/* {error && (
             <div className="text-sm text-red-600 text-center">{error}</div>
-          )}
+          )} */}
 
           {/* Submit Button */}
           <div>
@@ -99,7 +98,7 @@ const Login = () => {
 
         {/* Additional Links */}
         <div className="text-sm text-center">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a
             href="/signup"
             className="font-medium text-teal-600 hover:text-teal-500 hover:underline"

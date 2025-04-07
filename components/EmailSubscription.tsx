@@ -1,6 +1,29 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+import { subscribeToNewsletter } from "@/lib/actions";
+import { toast } from "react-toastify";
 
 const EmailSubscription = () => {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await subscribeToNewsletter(email);
+      if (response.success) {
+        toast.success(response.message);
+        setEmail("");
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.error("Subscription failed", error);
+      alert("There was an error. Please try again later.");
+    }
+  };
+
   return (
     <>
       <style>
@@ -38,11 +61,16 @@ const EmailSubscription = () => {
           </p>
 
           <form
+            onSubmit={handleSubmit}
             className="flex flex-col sm:flex-row justify-center items-center gap-4 fade-in"
             style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}
           >
             <input
               type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
               placeholder="Enter your email"
               className="w-full sm:w-64 px-4 py-2 text-gray-700 bg-white border-2 border-gray-300 rounded-full focus:outline-none focus:border-teal-600 transition-all duration-300"
             />

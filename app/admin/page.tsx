@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getBlogs, deleteBlog } from "@/lib/actions";
+import {
+  getBlogs,
+  deleteBlog,
+  getSubscriptions,
+  deleteSubscription,
+} from "@/lib/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faFileAlt,
   faUser,
   faSignOutAlt,
+  faEnvelopeCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const AdminPanel = () => {
   const [blogs, setBlogs] = useState<
@@ -20,33 +27,67 @@ const AdminPanel = () => {
       createdAt: Date;
     }[]
   >([]);
-  const [loading, setLoading] = useState(true);
+  const [subscriptions, setSubscriptions] = useState<
+    {
+      email: string;
+      createdAt: Date;
+    }[]
+  >([]);
+  const [loadingBlogs, setLoadingBlogs] = useState(true);
+  const [loadingSubscriptions, setLoadingSubscriptions] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("blogs");
 
-  // Fetch blogs on mount
+  // Fetch blogs and subscriptions on mount
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const fetchedBlogs = await getBlogs();
         setBlogs(fetchedBlogs);
-        setLoading(false);
+        setLoadingBlogs(false);
       } catch {
         setError("Failed to load blogs");
-        setLoading(false);
+        setLoadingBlogs(false);
       }
     };
+
+    const fetchSubscriptions = async () => {
+      try {
+        const fetchedSubscriptions = await getSubscriptions();
+        setSubscriptions(fetchedSubscriptions);
+        setLoadingSubscriptions(false);
+      } catch {
+        setError("Failed to load subscriptions");
+        setLoadingSubscriptions(false);
+      }
+    };
+
     fetchBlogs();
+    fetchSubscriptions();
   }, []);
 
   // Handle Blog Deletion
-  const handleDelete = async (blogId: string) => {
+  const handleDeleteBlog = async (blogId: string) => {
     if (confirm("Are you sure you want to delete this blog?")) {
       try {
         await deleteBlog(blogId);
         setBlogs(blogs.filter((blog) => blog.id !== blogId));
       } catch {
-        alert("Failed to delete blog");
+        toast.error("Failed to delete blog");
+      }
+    }
+  };
+
+  // Handle Subscription Deletion
+  const handleDeleteSubscription = async (email: string) => {
+    if (
+      confirm(`Are you sure you want to delete the subscription for ${email}?`)
+    ) {
+      try {
+        await deleteSubscription(email);
+        setSubscriptions(subscriptions.filter((sub) => sub.email !== email));
+      } catch {
+        toast.error("Failed to delete subscription");
       }
     }
   };
@@ -102,6 +143,24 @@ const AdminPanel = () => {
                   <span>Blogs</span>
                 </button>
               </li>
+              <li
+                className={`mb-2 ${
+                  activeTab === "subscriptions"
+                    ? "bg-teal-50 text-teal-600"
+                    : "text-gray-700"
+                }`}
+              >
+                <button
+                  onClick={() => setActiveTab("subscriptions")}
+                  className="flex items-center w-full px-4 py-2 rounded-lg hover:bg-orange-100"
+                >
+                  <FontAwesomeIcon
+                    icon={faEnvelopeCircleCheck}
+                    className="mr-3 text-lg w-[16px] h-[16px]"
+                  />
+                  <span>Subscriptions</span>
+                </button>
+              </li>
             </ul>
           </div>
           <div className="mb-6">
@@ -138,15 +197,21 @@ const AdminPanel = () => {
         <header className="bg-white shadow-sm">
           <div className="p-4 flex justify-between items-center">
             <h2 className="text-xl font-semibold text-gray-800">
-              {activeTab === "dashboard" ? "Dashboard" : "Blogs"}
+              {activeTab === "dashboard"
+                ? "Dashboard"
+                : activeTab === "blogs"
+                ? "Blogs"
+                : "Subscriptions"}
             </h2>
             <div className="flex items-center">
-              <a
-                href="admin/add-blog"
-                className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-all duration-300"
-              >
-                Add New Blog
-              </a>
+              {activeTab === "blogs" && (
+                <a
+                  href="admin/add-blog"
+                  className="px-4 py-2 bg-teal-600 text-white font-semibold rounded-full hover:bg-teal-700 transition-all duration-300"
+                >
+                  Add New Blog
+                </a>
+              )}
             </div>
           </div>
         </header>
@@ -162,9 +227,9 @@ const AdminPanel = () => {
                 Total Blogs: <span className="font-bold">{blogs.length}</span>
               </p>
             </div>
-          ) : (
+          ) : activeTab === "blogs" ? (
             <>
-              {loading ? (
+              {loadingBlogs ? (
                 <p className="text-gray-600 text-center">Loading blogs...</p>
               ) : error ? (
                 <p className="text-red-600 text-center">{error}</p>
@@ -219,7 +284,7 @@ const AdminPanel = () => {
                                 Edit
                               </a>
                               <button
-                                onClick={() => handleDelete(blog.id)}
+                                onClick={() => handleDeleteBlog(blog.id)}
                                 className="text-red-600 hover:text-red-500 font-medium cursor-pointer"
                               >
                                 Delete
@@ -233,7 +298,70 @@ const AdminPanel = () => {
                 </div>
               )}
             </>
-          )}
+          ) : activeTab === "subscriptions" ? (
+            <>
+              {loadingSubscriptions ? (
+                <p className="text-gray-600 text-center">
+                  Loading subscriptions...
+                </p>
+              ) : error ? (
+                <p className="text-red-600 text-center">{error}</p>
+              ) : subscriptions.length === 0 ? (
+                <p className="text-gray-600 text-center">
+                  No subscriptions found
+                </p>
+              ) : (
+                <div className="bg-white rounded-lg shadow">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-orange-100">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                            Email
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                            Date
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {subscriptions.map((sub) => (
+                          <tr key={sub.email}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                              {sub.email}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                              {new Date(sub.createdAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "long",
+                                  day: "numeric",
+                                  year: "numeric",
+                                }
+                              )}
+                            </td>
+                            <td className="py-4 px-4 flex space-x-2">
+                              <button
+                                onClick={() =>
+                                  handleDeleteSubscription(sub.email)
+                                }
+                                className="text-red-600 hover:text-red-500 font-medium cursor-pointer"
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : null}
         </main>
       </div>
     </div>

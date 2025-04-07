@@ -7,7 +7,7 @@ interface EditBlogProps {
 
 const EditBlog = async ({ params }: EditBlogProps) => {
   // Fetching the blog ID from params
-  const { id } = await params;
+  const { id } = params;
   // Fetching the blog from the database using Prisma
   const blog = await prisma.blog.findUnique({ where: { id } });
 
