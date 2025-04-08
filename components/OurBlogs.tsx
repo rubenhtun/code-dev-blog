@@ -4,6 +4,12 @@ import Link from "next/link";
 
 const OurBlogs = async () => {
   const blogs = await getBlogs();
+  const ourLatestBlogs = blogs
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, 4);
 
   return (
     <>
@@ -23,7 +29,7 @@ const OurBlogs = async () => {
 
           {/* Grid Layout for Blogs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {blogs.map((blog) => (
+            {ourLatestBlogs.map((blog) => (
               <Link
                 href={`/blogs/${blog.id}`}
                 key={blog.id}

@@ -1,13 +1,26 @@
+"use client";
+
 import Layout from "@/components/layout/Layout";
 import { getBlogs } from "@/lib/actions";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Blogs = async () => {
+  const [loadedBlogs, setLoadedBlogs] = useState(4);
   // Fetching all the blogs from the database
-  const blogs = await getBlogs();
+  const blogs = (await getBlogs())
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, loadedBlogs);
 
   // Get unique blog categories
   const categories = ["All", ...new Set(blogs.map((blog) => blog.category))];
+
+  const handleLoadMore = () => {
+    setLoadedBlogs((prevCount) => prevCount + 4);
+  };
 
   return (
     <Layout>
@@ -75,12 +88,12 @@ const Blogs = async () => {
 
           {/* More Blogs Button */}
           <div className="text-center mt-8">
-            <Link
-              href="/blogs"
+            <button
               className="inline-block px-6 py-2 bg-teal-600 text-white font-semibold rounded-full shadow-md hover:bg-teal-500 transition-all duration-300"
+              onClick={handleLoadMore}
             >
               More Blogs
-            </Link>
+            </button>
           </div>
         </div>
       </section>
