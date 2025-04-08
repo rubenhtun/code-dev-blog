@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Signup() {
+const Signup = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Left Section - Branding/Visual */}
@@ -148,4 +148,6 @@ export default function Signup() {
       </div>
     </div>
   );
-}
+};
+
+export default Signup;

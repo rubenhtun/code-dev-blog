@@ -23,6 +23,7 @@ const AdminPanel = () => {
   >([]);
   const [subscriptions, setSubscriptions] = useState<
     {
+      id: string;
       email: string;
       createdAt: Date;
     }[]
@@ -91,13 +92,11 @@ const AdminPanel = () => {
   };
 
   // Handle Subscription Deletion
-  const handleDeleteSubscription = async (email: string) => {
-    if (
-      confirm(`Are you sure you want to delete the subscription for ${email}?`)
-    ) {
+  const handleDeleteSubscription = async (emailId: string) => {
+    if (confirm(`Are you sure you want to delete the subscription?`)) {
       try {
-        await deleteSubscription(email);
-        setSubscriptions(subscriptions.filter((sub) => sub.email !== email));
+        await deleteSubscription(emailId);
+        setSubscriptions(subscriptions.filter((sub) => sub.id !== emailId));
       } catch {
         toast.error("Failed to delete subscription");
       }
@@ -256,9 +255,7 @@ const AdminPanel = () => {
                           </td>
                           <td className="py-4 px-4 flex space-x-2">
                             <button
-                              onClick={() =>
-                                handleDeleteSubscription(sub.email)
-                              }
+                              onClick={() => handleDeleteSubscription(sub.id)}
                               className="text-red-600 hover:text-red-500 font-medium cursor-pointer"
                             >
                               Delete

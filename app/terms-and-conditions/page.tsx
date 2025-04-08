@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
 
-export default function Terms() {
+const Terms = () => {
   return (
     <Layout>
       <div className="min-h-screen bg-orange-50 flex flex-col">
@@ -77,4 +77,6 @@ export default function Terms() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Terms;
