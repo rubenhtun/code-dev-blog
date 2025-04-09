@@ -13,15 +13,7 @@ const OurBlogs = async () => {
 
   return (
     <>
-      <style>
-        {`
-          .dotted-bg {
-            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1' fill='%23f3a183'/%3E%3C/svg%3E");
-            background-size: 20px 20px;
-          }
-        `}
-      </style>
-      <section className="bg-orange-50 py-12 dotted-bg">
+      <section className="py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-800 text-center mb-8">
             Our <span className="text-teal-600">Blogs</span>

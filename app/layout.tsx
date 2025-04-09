@@ -22,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={outfit.className}>
+      <body
+        suppressHydrationWarning
+        className={`${outfit.className} bg-orange-50 dotted-bg`}
+      >
         {children}
         <ToastContainer position="top-right" autoClose={3000} />
       </body>
