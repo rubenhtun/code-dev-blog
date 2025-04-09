@@ -76,7 +76,7 @@ const EmailSubscription = () => {
             />
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-2 bg-teal-600 text-white font-semibold rounded-full shadow-md hover:bg-teal-500 transition-all duration-300"
+              className="w-full sm:w-auto px-6 py-2 bg-teal-600 text-white font-semibold rounded-full shadow-md hover:bg-teal-500 transition-all duration-300 cursor-pointer"
             >
               Subscribe
             </button>

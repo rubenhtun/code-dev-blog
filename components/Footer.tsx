@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -23,36 +24,20 @@ const Footer = () => {
           </h3>
           <ul className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-6">
             <li>
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="text-gray-700 hover:text-teal-600 transition-colors duration-200"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="text-gray-700 hover:text-teal-600 transition-colors duration-200"
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
+              <Link
+                href="/blogs"
                 className="text-gray-700 hover:text-teal-600 transition-colors duration-200"
               >
                 Blogs
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="text-gray-700 hover:text-teal-600 transition-colors duration-200"
-              >
-                Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -74,12 +59,12 @@ const Footer = () => {
           <p className="text-gray-600">
             © {new Date().getFullYear()} CodeDEv. All rights reserved.
           </p>
-          <a
-            href="#"
+          <Link
+            href="/terms-and-conditions"
             className="mt-2 md:mt-0 text-gray-700 transition-colors duration-200 hover:text-teal-600"
           >
             Terms and Conditions
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

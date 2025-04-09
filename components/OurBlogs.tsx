@@ -1,22 +1,19 @@
 import React from "react";
 import { getBlogs } from "@/lib/actions";
-import Image from "next/image";
 import Link from "next/link";
 
 const OurBlogs = async () => {
   const blogs = await getBlogs();
+  const ourLatestBlogs = blogs
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, 4);
 
   return (
     <>
-      <style>
-        {`
-          .dotted-bg {
-            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1' fill='%23f3a183'/%3E%3C/svg%3E");
-            background-size: 20px 20px;
-          }
-        `}
-      </style>
-      <section className="bg-orange-50 py-12 dotted-bg">
+      <section className="py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-800 text-center mb-8">
             Our <span className="text-teal-600">Blogs</span>
@@ -24,17 +21,15 @@ const OurBlogs = async () => {
 
           {/* Grid Layout for Blogs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {blogs.map((blog) => (
+            {ourLatestBlogs.map((blog) => (
               <Link
                 href={`/blogs/${blog.id}`}
                 key={blog.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform hover:translate-x-1 hover:-translate-y-1 hover:shadow-[-7px_7px_0px_#4b5563] cursor-pointer"
               >
-                <Image
-                  src={blog.imageUrl || ""}
+                <img
+                  src={blog.imageUrl || "blog-image.jpg"}
                   alt={blog.title}
-                  width={600}
-                  height={160}
                   className="w-full h-40 object-cover"
                 />
                 <div className="p-6">
